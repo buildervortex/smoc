@@ -16,7 +16,7 @@ enum Operation {
   lUDecomposition,
 }
 
-sealed class OperationState extends Equatable {
+class OperationState extends Equatable {
   final List<SparseMatrix> sparseMatrixes;
   final Operation operation;
 

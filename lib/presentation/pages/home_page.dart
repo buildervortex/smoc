@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smo/bloc/cubit/operation_cubit.dart';
+import 'package:smo/di/injection_container.dart';
 
 class MatrixOperation {
   final String name;
@@ -17,62 +20,62 @@ class HomePage extends StatelessWidget {
   final List<MatrixOperation> operations = const [
     MatrixOperation(
       name: 'Addition',
-      imagePath: 'assets/images/addition.png',
+      imagePath: 'assets/Plus.svg',
       operation: Operation.addition,
     ),
     MatrixOperation(
       name: 'Subtraction',
-      imagePath: 'assets/images/subtraction.png',
+      imagePath: 'assets/Minus.svg',
       operation: Operation.subtraction,
     ),
     MatrixOperation(
       name: 'Scaler Multiplication',
-      imagePath: 'assets/images/multiplication.png',
+      imagePath: 'assets/Multiplication.svg',
       operation: Operation.scalerMultiplication,
     ),
     MatrixOperation(
       name: 'Scaler Division',
-      imagePath: 'assets/images/division.png',
+      imagePath: 'assets/Division.svg',
       operation: Operation.scalerDivision,
     ),
     MatrixOperation(
       name: 'Hadamard Product',
-      imagePath: 'assets/images/hadamard_product.png',
+      imagePath: 'assets/Astrics.svg',
       operation: Operation.hadamardProduct,
     ),
     MatrixOperation(
       name: 'Transpose',
-      imagePath: 'assets/images/transpose.png',
+      imagePath: 'assets/Rotate.svg',
       operation: Operation.transpose,
     ),
     MatrixOperation(
       name: 'Matrix Multiplication',
-      imagePath: 'assets/images/matrix_multiplication.png',
+      imagePath: 'assets/MatrixMatrixMultiplication.svg',
       operation: Operation.matrixMatrixMultiplication,
     ),
     MatrixOperation(
       name: 'Determinant',
-      imagePath: 'assets/images/determinant.png',
+      imagePath: 'assets/determinant.svg',
       operation: Operation.determinant,
     ),
     MatrixOperation(
       name: 'Trace',
-      imagePath: 'assets/images/trace.png',
+      imagePath: 'assets/Trace.svg',
       operation: Operation.trace,
     ),
     MatrixOperation(
       name: 'Inverse',
-      imagePath: 'assets/images/inverse.png',
+      imagePath: 'assets/Inverse.svg',
       operation: Operation.inverse,
     ),
     MatrixOperation(
       name: 'Gaussian Elimination',
-      imagePath: 'assets/images/gaussian_elimination.png',
+      imagePath: 'assets/Elemination.svg',
       operation: Operation.guassianElimination,
     ),
     MatrixOperation(
       name: 'LU Decomposition',
-      imagePath: 'assets/images/ludecomposition.png',
+      imagePath: 'assets/split.svg',
       operation: Operation.lUDecomposition,
     ),
   ];
@@ -80,6 +83,71 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Column(
+        children: [
+          SizedBox(height: 20),
+          Text(
+            'Select The Preferred Matrix Operation To Proceed',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 20),
+          Expanded(
+            child: BlocBuilder<OperationCubit, OperationState>(
+              builder: (cont, state) {
+                final selectedOperation = state.operation;
+                return ListView(
+                  children: operations.map((operation) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                        transform: selectedOperation == operation.operation
+                            ? (Matrix4.identity()..scale(1.2))
+                            : Matrix4.identity(),
+                        child: ListTile(
+                          horizontalTitleGap: 40,
+                          leading: SizedBox(
+                            width: 25,
+                            height: 25,
+                            child: SvgPicture.asset(
+                              operation.imagePath,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          title: Text(
+                            operation.name,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: selectedOperation == operation.operation
+                                  ? Colors.cyan
+                                  : Colors.black,
+                            ),
+                          ),
+                          onTap: () {
+                            context.read<OperationCubit>().setOperation(
+                                  operation.operation,
+                                );
+                          },
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                );
+              },
+            ),
+          ),
+          TextButton(
+              onPressed: () {},
+              child: Text(
+                'Proceed',
+                style: TextStyle(color: Colors.cyan),
+              )),
+          SizedBox(height: 20),
+        ],
+      ),
+    );
   }
 }
