@@ -1,6 +1,6 @@
 <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_4_7)">
-<path d="M56 0C57.1046 0 58 0.895431 58 2V50H106C107.105 50 108 50.8954 108 52C108 53.1046 107.105 54 106 54H58V102C58 103.105 57.1046 104 56 104C54.8954 104 54 103.105 54 102V54H6C4.89543 54 4 53.1046 4 52C4 50.8954 4.89543 50 6 50H54V2C54 0.895431 54.8954 0 56 0Z" fill="black"/>
+<path d="M56 0C57.1046 0 58 0.895431 58 2V50H106C107.105 50 108 50.8954 108 52C108 53.1046 107.105 54 106 54H58V102C58 103.105 57.1046 104 56 104C54.8954 104 54 103.105 54 102V54H6C4.89543 54 4 53.1046 4 52C4 50.8954 4.89543 50 6 50H54V2C54 0.895431 54.8954 0 56 0Z" fill="url(#paint0_linear_4_7)"/>
 </g>
 <defs>
 <filter id="filter0_d_4_7" x="0" y="0" width="112" height="112" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
@@ -13,5 +13,9 @@
 <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_4_7"/>
 <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_4_7" result="shape"/>
 </filter>
+<linearGradient id="paint0_linear_4_7" x1="10.5" y1="67" x2="108" y2="29" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D5D519"/>
+<stop offset="1" stop-color="#FAFAB3"/>
+</linearGradient>
 </defs>
 </svg>
