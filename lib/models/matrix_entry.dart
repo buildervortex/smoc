@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
-class Matrixentry extends Equatable {
+class MatrixEntry extends Equatable {
   final int row;
   final int column;
   final double value;
 
-  const Matrixentry({
+  const MatrixEntry({
     required this.row,
     required this.column,
     required this.value,

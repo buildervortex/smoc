@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:smo/models/matrix_entry.dart';
 
-class Sparsematrix extends Equatable {
+class SparseMatrix extends Equatable {
   final int rows;
   final int columns;
-  final List<Matrixentry> entries;
+  final List<MatrixEntry> entries;
 
-  const Sparsematrix({
+  const SparseMatrix({
     required this.rows,
     required this.columns,
     required this.entries,
