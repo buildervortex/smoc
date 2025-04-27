@@ -1,17 +1,59 @@
 part of 'operation_cubit_cubit.dart';
 
-sealed class OperationCubitState extends Equatable {
-  
-  const OperationCubitState();
-
-  @override
-  List<Object> get props => [];
+enum Operation {
+  none,
+  addition,
+  subtraction,
+  scalerMultiplication,
+  scalerDivision,
+  hadamardProduct,
+  transpose,
+  matrixMatrixMultiplication,
+  determinant,
+  trace,
+  inverse,
+  guassianElimination,
+  lUDecomposition,
 }
 
-final class OperationCubitInitial extends OperationCubitState {}
+sealed class OperationCubitState extends Equatable {
+  final List<Sparsematrix> sparseMatrixes;
+  final Operation operation;
 
-final class OperationCubitLoading extends OperationCubitState {}
+  const OperationCubitState(
+      {required this.sparseMatrixes, required this.operation});
 
-final class OperationCubitSuccess extends OperationCubitState {}
+  @override
+  List<Object> get props => [sparseMatrixes, operation];
+}
 
-final class OperationCubitError extends OperationCubitState {}
+final class OperationCubitInitial extends OperationCubitState {
+  const OperationCubitInitial(
+      {required super.sparseMatrixes, required super.operation});
+}
+
+final class OperationCubitSuccess extends OperationCubitState {
+  final List<Sparsematrix> resultMatrixes;
+  final int resultValue;
+  const OperationCubitSuccess(
+      {required this.resultMatrixes,
+      required this.resultValue,
+      required super.sparseMatrixes,
+      required super.operation})
+      : super();
+}
+
+final class OperationCubitFailed extends OperationCubitState {
+  final String errorMessage;
+  const OperationCubitFailed(
+      {required this.errorMessage,
+      required super.sparseMatrixes,
+      required super.operation})
+      : super();
+}
+
+final class OperationCubitLoading extends OperationCubitState {
+  const OperationCubitLoading(
+      {required super.sparseMatrixes, required super.operation})
+      : super();
+}
