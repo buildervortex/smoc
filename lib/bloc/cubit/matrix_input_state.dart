@@ -1,24 +1,25 @@
 part of 'matrix_input_cubit.dart';
 
-sealed class MatrixInputState extends Equatable {
+class MatrixInputState extends Equatable {
   final SparseMatrix sparseMatrix;
 
   const MatrixInputState({required this.sparseMatrix});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [sparseMatrix];
 }
 
 final class MatrixInputInitial extends MatrixInputState {
-  const MatrixInputInitial({required super.sparseMatrix});
+  MatrixInputInitial()
+      : super(sparseMatrix: SparseMatrix(columns: 0, rows: 0, entries: []));
 }
 
-final class MatrixInputSuccess extends MatrixInputState {
-  const MatrixInputSuccess({required super.sparseMatrix});
+final class MatrixInputEntrySuccess extends MatrixInputState {
+  const MatrixInputEntrySuccess({required super.sparseMatrix});
 }
 
-final class MatrixInputFailed extends MatrixInputState {
+final class MatrixInputEntryFailed extends MatrixInputState {
   final String errorMessage;
-  const MatrixInputFailed(
+  const MatrixInputEntryFailed(
       {required super.sparseMatrix, required this.errorMessage});
 }
