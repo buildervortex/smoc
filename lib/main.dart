@@ -4,6 +4,7 @@ import 'package:smo/bloc/cubit/operation_cubit.dart';
 import 'package:smo/di/injection_container.dart';
 import 'package:smo/models/matrix_entry.dart';
 import 'package:smo/models/sparse_matrix.dart';
+import 'package:smo/presentation/pages/double_matrix_output_page.dart';
 import 'package:smo/presentation/pages/home_page.dart';
 import 'package:smo/presentation/pages/single_matrix_output_page.dart';
 
@@ -30,12 +31,31 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
-        '/': (context) =>  SingleMatrixOutputPage(matrix: SparseMatrix(rows: 2, columns: 2, entries: [
-          MatrixEntry(row: 0, column: 0, value: 1),
-          MatrixEntry(row: 0, column: 1, value: 2),
-          MatrixEntry(row: 1, column: 0, value: 3),
-          MatrixEntry(row: 1, column: 1, value: 4),
-        ]),operation: "Addition"),
+        '/': (context) => DoubleMatrixOutputPage(
+              matrix1: SparseMatrix(
+                rows: 2,
+                columns: 2,
+                entries: [
+                  MatrixEntry(row: 0, column: 0, value: 1),
+                  MatrixEntry(row: 0, column: 1, value: 2),
+                  MatrixEntry(row: 1, column: 0, value: 3),
+                  MatrixEntry(row: 1, column: 1, value: 4),
+                ],
+              ),
+              matrix2: SparseMatrix(
+                rows: 2,
+                columns: 2,
+                entries: [
+                  MatrixEntry(row: 0, column: 0, value: 1),
+                  MatrixEntry(row: 0, column: 1, value: 2),
+                  MatrixEntry(row: 1, column: 0, value: 3),
+                  MatrixEntry(row: 1, column: 1, value: 4),
+                ],
+              ),
+              title1: "U Matrix",
+              title2: "L Matrix",
+              operation: "Addition",
+            ),
       },
       initialRoute: '/',
     );
