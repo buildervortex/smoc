@@ -25,9 +25,13 @@ enum Operation {
 
 class OperationState extends Equatable {
   final List<SparseMatrix> sparseMatrixes;
+  final List<double> inputValues;
   final Operation operation;
 
-  const OperationState({required this.sparseMatrixes, required this.operation});
+  const OperationState(
+      {required this.sparseMatrixes,
+      required this.operation,
+      required this.inputValues});
 
   @override
   List<Object> get props => [sparseMatrixes, operation];
@@ -35,7 +39,9 @@ class OperationState extends Equatable {
 
 final class OperationInitial extends OperationState {
   const OperationInitial(
-      {required super.sparseMatrixes, required super.operation});
+      {required super.sparseMatrixes,
+      required super.operation,
+      required super.inputValues});
 }
 
 final class OperationSuccess extends OperationState {
@@ -45,7 +51,8 @@ final class OperationSuccess extends OperationState {
       {required this.resultMatrixes,
       required this.resultValue,
       required super.sparseMatrixes,
-      required super.operation})
+      required super.operation,
+      required super.inputValues})
       : super();
 }
 
@@ -54,12 +61,15 @@ final class OperationFailed extends OperationState {
   const OperationFailed(
       {required this.errorMessage,
       required super.sparseMatrixes,
-      required super.operation})
+      required super.operation,
+      required super.inputValues})
       : super();
 }
 
 final class OperationLoading extends OperationState {
   const OperationLoading(
-      {required super.sparseMatrixes, required super.operation})
+      {required super.sparseMatrixes,
+      required super.operation,
+      required super.inputValues})
       : super();
 }

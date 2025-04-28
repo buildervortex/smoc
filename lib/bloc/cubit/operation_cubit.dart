@@ -6,10 +6,13 @@ part 'operation_state.dart';
 
 class OperationCubit extends Cubit<OperationState> {
   OperationCubit()
-      : super(OperationInitial(operation: Operation.none, sparseMatrixes: []));
+      : super(OperationInitial(
+            operation: Operation.none, sparseMatrixes: [], inputValues: []));
 
   void setOperation(Operation operation) {
     emit(OperationState(
-        operation: operation, sparseMatrixes: state.sparseMatrixes));
+        operation: operation,
+        sparseMatrixes: state.sparseMatrixes,
+        inputValues: state.inputValues));
   }
 }

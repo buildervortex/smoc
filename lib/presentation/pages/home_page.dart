@@ -160,4 +160,11 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
+  Future<void> _getInputs(BuildContext context) async {
+    int matrixCount =
+        context.read<OperationCubit>().state.operation.inputMatrixCount;
+    int valueCount =
+        context.read<OperationCubit>().state.operation.inputValueCount;
+  }
 }
