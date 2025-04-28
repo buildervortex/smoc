@@ -18,24 +18,36 @@ class MatrixInputCubit extends Cubit<MatrixInputState> {
 
   void addSparseMatrixEntry(int row, int column, double value) {
     final currentState = state.sparseMatrix;
+    final indexedRow = row - 1;
+    final indexedColumn = column - 1;
+
+    if (indexedRow < 0 || indexedColumn < 0) {
+      emit(MatrixInputEntryFailed(
+          sparseMatrix: currentState,
+          errorMessage:
+              "Invalid entry. Row and column must be greater than or equal 0"));
+      return;
+    }
     if (currentState.entries
-        .any((entry) => entry.row == row && entry.column == column)) {
+        .any((entry) => entry.row == indexedRow && entry.column == indexedColumn)) {
       emit(MatrixInputEntryFailed(
           sparseMatrix: currentState, errorMessage: "Entry already exists"));
       return;
     }
-    if (row >= currentState.rows || column >= currentState.columns) {
+    if (row > currentState.rows || column > currentState.columns) {
       emit(MatrixInputEntryFailed(
-          sparseMatrix: currentState, errorMessage: "Invalid entry"));
+          sparseMatrix: currentState,
+          errorMessage: "Invalid entry. Row or column out of bounds"));
       return;
     }
     if (value == 0) {
       emit(MatrixInputEntryFailed(
-          sparseMatrix: currentState, errorMessage: "Invalid entry"));
+          sparseMatrix: currentState,
+          errorMessage: "Invalid entry. Value cannot be 0"));
       return;
     }
     final List<MatrixEntry> newEntries = List.from(currentState.entries)
-      ..add(MatrixEntry(row: row, column: column, value: value));
+      ..add(MatrixEntry(row: indexedRow, column: indexedColumn, value: value));
     emit(MatrixInputEntrySuccess(
         sparseMatrix: SparseMatrix(
             columns: currentState.columns,
