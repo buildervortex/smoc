@@ -24,4 +24,13 @@ class OperationCubit extends Cubit<OperationState> {
         sparseMatrixes: newSparseMatrixes,
         inputValues: state.inputValues));
   }
+
+  void addInputValue(double inputValue) {
+    final List<double> newInputValues = List.from(state.inputValues)
+      ..add(inputValue);
+    emit(OperationState(
+        operation: state.operation,
+        sparseMatrixes: state.sparseMatrixes,
+        inputValues: newInputValues));
+  }
 }

@@ -6,6 +6,7 @@ import 'package:smo/bloc/cubit/operation_cubit.dart';
 import 'package:smo/di/injection_container.dart';
 import 'package:smo/models/sparse_matrix.dart';
 import 'package:smo/presentation/pages/matrix_input_page.dart';
+import 'package:smo/presentation/pages/single_input_page.dart';
 
 class MatrixOperation {
   final String name;
@@ -181,6 +182,13 @@ class HomePage extends StatelessWidget {
                   )));
       if (matrix != null) {
         context.read<OperationCubit>().addSparseMatrix(matrix);
+      }
+    }
+    for (int i = 0; i < valueCount; i++) {
+      var value = await Navigator.push<double>(
+          context, MaterialPageRoute(builder: (_) => SingleInputPage()));
+      if (value != null) {
+        context.read<OperationCubit>().addInputValue(value);
       }
     }
   }
