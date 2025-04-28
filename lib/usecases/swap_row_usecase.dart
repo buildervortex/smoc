@@ -1,8 +1,8 @@
 class SwapRowUsecase {
-  Map<int, Map<int, double>> call(
-      Map<int, Map<int, double>> sparseMatrix, int matrixSize) {
+  Map<int, Map<int, num>> call(
+      Map<int, Map<int, num>> sparseMatrix, int matrixSize) {
     // Create the permuntation matrix
-    Map<int, Map<int, double>> perm = {};
+    Map<int, Map<int, num>> perm = {};
     for (int i = 0; i < matrixSize; i++) {
       // set the row
       perm[i] = {};
@@ -25,7 +25,7 @@ class SwapRowUsecase {
         }
 
         var currentRowContent = sparseMatrix[rowIndex];
-        Map<int, double> downRowContent = sparseMatrix[downRowIndex]!;
+        Map<int, num> downRowContent = sparseMatrix[downRowIndex]!;
 
         sparseMatrix[rowIndex] = downRowContent;
 
@@ -36,7 +36,7 @@ class SwapRowUsecase {
         }
 
         // Swap the permutation matrix
-        Map<int, double> tempRow = perm[rowIndex]!;
+        Map<int, num> tempRow = perm[rowIndex]!;
         perm[rowIndex] = perm[downRowIndex]!;
         perm[downRowIndex] = tempRow;
         break;
