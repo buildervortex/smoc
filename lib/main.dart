@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smo/bloc/cubit/operation_cubit.dart';
 import 'package:smo/di/injection_container.dart';
 import 'package:smo/presentation/pages/home_page.dart';
-import 'package:smo/presentation/pages/input_page.dart';
 
 void main() async {
   await initDiContainer();
@@ -29,7 +28,6 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/': (context) => const HomePage(),
-        '/input': (context) => const InputPage(),
       },
       initialRoute: '/',
     );

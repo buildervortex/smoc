@@ -5,7 +5,7 @@ import 'package:smo/bloc/cubit/matrix_input_cubit.dart';
 import 'package:smo/bloc/cubit/operation_cubit.dart';
 import 'package:smo/di/injection_container.dart';
 import 'package:smo/models/sparse_matrix.dart';
-import 'package:smo/presentation/widgets/SparseMatrixInputForm.dart';
+import 'package:smo/presentation/pages/matrix_input_page.dart';
 
 class MatrixOperation {
   final String name;
@@ -177,7 +177,7 @@ class HomePage extends StatelessWidget {
           MaterialPageRoute(
               builder: (_) => BlocProvider(
                     create: (cont) => sl<MatrixInputCubit>(),
-                    child: Sparsematrixinputform(),
+                    child: MatrixInputPage(),
                   )));
       if (matrix != null) {
         context.read<OperationCubit>().addSparseMatrix(matrix);

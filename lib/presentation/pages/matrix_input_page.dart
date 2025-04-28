@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smo/bloc/cubit/matrix_input_cubit.dart';
 
-class Sparsematrixinputform extends StatefulWidget {
-  const Sparsematrixinputform({super.key});
+class MatrixInputPage extends StatefulWidget {
+  const MatrixInputPage({super.key});
 
   @override
-  State<Sparsematrixinputform> createState() => _SparsematrixinputformState();
+  State<MatrixInputPage> createState() => _MatrixInputPageState();
 }
 
-class _SparsematrixinputformState extends State<Sparsematrixinputform> {
+class _MatrixInputPageState extends State<MatrixInputPage> {
   final List<TextEditingController> _controllers = [
     TextEditingController(),
     TextEditingController(),
