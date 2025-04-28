@@ -139,7 +139,18 @@ class HomePage extends StatelessWidget {
             ),
           ),
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                if (context.read<OperationCubit>().state.operation ==
+                    Operation.none) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Please select an operation first'),
+                    ),
+                  );
+                  return;
+                }
+                Navigator.pushNamed(context, "/input");
+              },
               child: Text(
                 'Proceed',
                 style: TextStyle(color: Colors.cyan),
