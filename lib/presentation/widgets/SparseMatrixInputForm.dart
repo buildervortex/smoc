@@ -155,7 +155,10 @@ class _SparsematrixinputformState extends State<Sparsematrixinputform> {
           ),
           TextButton(
             child: Text("Procede"),
-            onPressed: () {},
+            onPressed: () {
+              var matrix = context.read<MatrixInputCubit>().state.sparseMatrix;
+              Navigator.pop(context, matrix);
+            },
           ),
         ],
       ),

@@ -15,4 +15,13 @@ class OperationCubit extends Cubit<OperationState> {
         sparseMatrixes: state.sparseMatrixes,
         inputValues: state.inputValues));
   }
+
+  void addSparseMatrix(SparseMatrix sparseMatrix) {
+    final List<SparseMatrix> newSparseMatrixes = List.from(state.sparseMatrixes)
+      ..add(sparseMatrix);
+    emit(OperationState(
+        operation: state.operation,
+        sparseMatrixes: newSparseMatrixes,
+        inputValues: state.inputValues));
+  }
 }

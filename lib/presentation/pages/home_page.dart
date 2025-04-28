@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:smo/bloc/cubit/matrix_input_cubit.dart';
 import 'package:smo/bloc/cubit/operation_cubit.dart';
+import 'package:smo/di/injection_container.dart';
+import 'package:smo/models/sparse_matrix.dart';
+import 'package:smo/presentation/widgets/SparseMatrixInputForm.dart';
 
 class MatrixOperation {
   final String name;
@@ -149,7 +153,7 @@ class HomePage extends StatelessWidget {
                   );
                   return;
                 }
-                Navigator.pushNamed(context, "/input");
+                _getInputs(context);
               },
               child: Text(
                 'Proceed',
@@ -166,5 +170,18 @@ class HomePage extends StatelessWidget {
         context.read<OperationCubit>().state.operation.inputMatrixCount;
     int valueCount =
         context.read<OperationCubit>().state.operation.inputValueCount;
+
+    for (int i = 0; i < matrixCount; i++) {
+      var matrix = await Navigator.push<SparseMatrix>(
+          context,
+          MaterialPageRoute(
+              builder: (_) => BlocProvider(
+                    create: (cont) => sl<MatrixInputCubit>(),
+                    child: Sparsematrixinputform(),
+                  )));
+      if (matrix != null) {
+        context.read<OperationCubit>().addSparseMatrix(matrix);
+      }
+    }
   }
 }
