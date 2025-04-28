@@ -25,6 +25,10 @@ class GuassianEliminationUsecase {
         var pivotRowContent = Map<int, num>.from(sparseMatrix[rowIndex]!);
         var downRowContent = Map<int, num>.from(sparseMatrix[downRowIndex]!);
 
+        if (pivotRowContent[pivotIndex] == 0) {
+          continue;
+        }
+
         num multiplier =
             downRowContent[pivotIndex]! / pivotRowContent[pivotIndex]!;
 
