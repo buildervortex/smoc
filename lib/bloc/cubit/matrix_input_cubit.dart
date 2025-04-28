@@ -29,6 +29,11 @@ class MatrixInputCubit extends Cubit<MatrixInputState> {
           sparseMatrix: currentState, errorMessage: "Invalid entry"));
       return;
     }
+    if (value == 0) {
+      emit(MatrixInputEntryFailed(
+          sparseMatrix: currentState, errorMessage: "Invalid entry"));
+      return;
+    }
     final List<MatrixEntry> newEntries = List.from(currentState.entries)
       ..add(MatrixEntry(row: row, column: column, value: value));
     emit(MatrixInputEntrySuccess(
