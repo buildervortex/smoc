@@ -82,6 +82,11 @@ class HomePage extends StatelessWidget {
       imagePath: 'assets/split.svg',
       operation: Operation.lUDecomposition,
     ),
+    MatrixOperation(
+      name: 'Adjoint',
+      imagePath: 'assets/Puzzle.svg',
+      operation: Operation.adjoint,
+    ),
   ];
 
   const HomePage({super.key});
