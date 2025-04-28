@@ -83,85 +83,199 @@ class HomePage extends StatelessWidget {
       operation: Operation.lUDecomposition,
     ),
   ];
+
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final lightBlue = Colors.lightBlue;
+
     return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(height: 20),
-          Text(
-            'Select The Preferred Matrix Operation To Proceed',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 20),
-          Expanded(
-            child: BlocBuilder<OperationCubit, OperationState>(
-              builder: (cont, state) {
-                final selectedOperation = state.operation;
-                return ListView(
-                  children: operations.map((operation) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                        transform: selectedOperation == operation.operation
-                            ? (Matrix4.identity()..scale(1.2))
-                            : Matrix4.identity(),
-                        child: ListTile(
-                          horizontalTitleGap: 40,
-                          leading: SizedBox(
-                            width: 25,
-                            height: 25,
-                            child: SvgPicture.asset(
-                              operation.imagePath,
-                              fit: BoxFit.contain,
+      appBar: AppBar(
+        title: const Text('Matrix Operations'),
+        backgroundColor: lightBlue,
+        foregroundColor: Colors.white,
+        elevation: 0,
+      ),
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            // Header Section
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Column(
+                children: [
+                  Text(
+                    'Select Matrix Operation',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: lightBlue.shade700,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Choose one of the operations below to proceed',
+                    style: TextStyle(
+                      color: Colors.grey.shade600,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Operations List
+            Expanded(
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  side: BorderSide(color: lightBlue.shade100, width: 1),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: BlocBuilder<OperationCubit, OperationState>(
+                    builder: (context, state) {
+                      final selectedOperation = state.operation;
+                      return ListView.separated(
+                        padding: const EdgeInsets.all(8),
+                        separatorBuilder: (context, index) => Divider(
+                          height: 1,
+                          indent: 70,
+                          endIndent: 24,
+                          color: Colors.grey.shade200,
+                        ),
+                        itemCount: operations.length,
+                        itemBuilder: (context, index) {
+                          final operation = operations[index];
+                          final isSelected =
+                              selectedOperation == operation.operation;
+
+                          return AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                            margin: EdgeInsets.symmetric(
+                              vertical: 4,
+                              horizontal: isSelected ? 8 : 0,
                             ),
-                          ),
-                          title: Text(
-                            operation.name,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: selectedOperation == operation.operation
-                                  ? Colors.cyan
-                                  : Colors.black,
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? lightBlue.shade50
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                          ),
-                          onTap: () {
-                            context.read<OperationCubit>().setOperation(
-                                  operation.operation,
-                                );
-                          },
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(12),
+                                onTap: () {
+                                  context.read<OperationCubit>().setOperation(
+                                        operation.operation,
+                                      );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12.0),
+                                  child: ListTile(
+                                    leading: Container(
+                                      width: 48,
+                                      height: 48,
+                                      decoration: BoxDecoration(
+                                        color: isSelected
+                                            ? lightBlue.shade100
+                                            : Colors.grey.shade100,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      padding: const EdgeInsets.all(12),
+                                      child: SvgPicture.asset(
+                                        operation.imagePath,
+                                        fit: BoxFit.contain,
+                                        colorFilter: ColorFilter.mode(
+                                          isSelected
+                                              ? lightBlue.shade700
+                                              : Colors.grey.shade700,
+                                          BlendMode.srcIn,
+                                        ),
+                                      ),
+                                    ),
+                                    title: Text(
+                                      operation.name,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: isSelected
+                                            ? FontWeight.bold
+                                            : FontWeight.normal,
+                                        color: isSelected
+                                            ? lightBlue.shade700
+                                            : Colors.black87,
+                                      ),
+                                    ),
+                                    trailing: isSelected
+                                        ? Icon(
+                                            Icons.check_circle,
+                                            color: lightBlue,
+                                          )
+                                        : null,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+
+            // Proceed Button
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              height: 56,
+              child: ElevatedButton(
+                onPressed: () {
+                  if (context.read<OperationCubit>().state.operation ==
+                      Operation.none) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: const Text('Please select an operation first'),
+                        backgroundColor: lightBlue.shade700,
+                        behavior: SnackBarBehavior.floating,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     );
-                  }).toList(),
-                );
-              },
+                    return;
+                  }
+                  _getInputs(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: lightBlue.shade700,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 3,
+                ),
+                child: const Text(
+                  'PROCEED',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ),
             ),
-          ),
-          TextButton(
-              onPressed: () {
-                if (context.read<OperationCubit>().state.operation ==
-                    Operation.none) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Please select an operation first'),
-                    ),
-                  );
-                  return;
-                }
-                _getInputs(context);
-              },
-              child: Text(
-                'Proceed',
-                style: TextStyle(color: Colors.cyan),
-              )),
-          SizedBox(height: 20),
-        ],
+            const SizedBox(height: 16),
+          ],
+        ),
       ),
     );
   }
