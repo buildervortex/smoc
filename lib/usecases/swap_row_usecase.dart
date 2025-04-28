@@ -1,5 +1,3 @@
-import 'package:equatable/equatable.dart';
-
 class SwapRowUsecase {
   Map<int, Map<int, double>> call(
       Map<int, Map<int, double>> sparseMatrix, int matrixSize) {
@@ -46,20 +44,4 @@ class SwapRowUsecase {
     }
     return perm;
   }
-}
-
-class SwapRowSpec extends Equatable {
-  Map<int, Map<int, double>> permutationMatrix;
-  Map<int, Map<int, double>> sparseMatrix;
-
-  SwapRowSpec({
-    required this.permutationMatrix,
-    required this.sparseMatrix,
-  });
-
-  @override
-  List<Object?> get props => [
-        permutationMatrix,
-        sparseMatrix,
-      ];
 }
