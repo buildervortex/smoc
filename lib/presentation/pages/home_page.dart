@@ -87,6 +87,11 @@ class HomePage extends StatelessWidget {
       imagePath: 'assets/Puzzle.svg',
       operation: Operation.adjoint,
     ),
+    MatrixOperation(
+      name: 'Cofactor',
+      imagePath: 'assets/Connector.svg',
+      operation: Operation.cofactor,
+    ),
   ];
 
   const HomePage({super.key});

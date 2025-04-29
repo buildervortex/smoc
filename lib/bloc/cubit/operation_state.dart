@@ -14,7 +14,8 @@ enum Operation {
   inverse(1, 1, 0),
   guassianElimination(1, 1, 0),
   lUDecomposition(1, 2, 0),
-  adjoint(1, 1, 0);
+  adjoint(1, 1, 0),
+  cofactor(1, 1, 0);
 
   final int inputMatrixCount;
   final int outputMatrixCount;
