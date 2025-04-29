@@ -76,6 +76,39 @@ class SparseMatrix extends Equatable {
     );
   }
 
+  Map<int, Map<int, num>> docfromCOO(List<List<num>> coo) {
+    final dok = <int, Map<int, num>>{};
+
+    for (var entry in coo) {
+      final row = entry[0].toInt();
+      final column = entry[1].toInt();
+      final value = entry[2];
+
+      if (!dok.containsKey(row)) {
+        dok[row] = {};
+      }
+      dok[row]![column] = value;
+    }
+
+    return dok;
+  }
+
+  List<List<num>> coofromDoc(Map<int, Map<int, num>> doc) {
+    final coo = <List<num>>[];
+
+    for (var rowEntry in doc.entries) {
+      for (var columnEntry in rowEntry.value.entries) {
+        coo.add([
+          rowEntry.key.toDouble(),
+          columnEntry.key.toDouble(),
+          columnEntry.value
+        ]);
+      }
+    }
+
+    return coo;
+  }
+
   @override
   String toString() {
     return 'SparseMatrix(rows: $rows, columns: $columns, entries: $entries)';

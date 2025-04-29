@@ -73,5 +73,37 @@ void main() {
         MatrixEntry(row: 1, column: 2, value: 3.5),
       ]);
     });
+
+    test('docfromCOO converts COO format list to a nested map representation',
+        () {
+      final coo = [
+        [0.0, 1.0, 2.0],
+        [1.0, 2.0, 3.5],
+      ];
+
+      final matrix = SparseMatrix(rows: 3, columns: 3, entries: []);
+      final doc = matrix.docfromCOO(coo);
+
+      expect(doc, {
+        0: {1: 2.0},
+        1: {2: 3.5},
+      });
+    });
+
+    test('coofromDoc converts a nested map representation to COO format list',
+        () {
+      final doc = {
+        0: {1: 2.0},
+        1: {2: 3.5},
+      };
+
+      final matrix = SparseMatrix(rows: 3, columns: 3, entries: []);
+      final coo = matrix.coofromDoc(doc);
+
+      expect(coo, [
+        [0.0, 1.0, 2.0],
+        [1.0, 2.0, 3.5],
+      ]);
+    });
   });
 }
