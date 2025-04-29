@@ -7,6 +7,8 @@ import 'package:smo/di/injection_container.dart';
 import 'package:smo/models/sparse_matrix.dart';
 import 'package:smo/presentation/pages/matrix_input_page.dart';
 import 'package:smo/presentation/pages/single_input_page.dart';
+import 'package:smo/presentation/pages/single_matrix_output_page.dart';
+import 'package:smo/usecases/addition_usecase.dart';
 
 class MatrixOperation {
   final String name;
@@ -315,6 +317,7 @@ class HomePage extends StatelessWidget {
         context.read<OperationCubit>().addInputValue(value);
       }
     }
+    _performOperation(context);
   }
 
   Future<void> _performOperation(BuildContext context) async {
@@ -326,7 +329,19 @@ class HomePage extends StatelessWidget {
       case Operation.none:
         break;
       case Operation.addition:
-        // sl
+        var additionUsecase = sl<AdditionUsecase>();
+        var result = additionUsecase(
+            sparseMatrixes[0].toDoc(),
+            sparseMatrixes[1].toDoc(),
+            sparseMatrixes[0].rows,
+            sparseMatrixes[0].columns);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => SingleMatrixOutputPage(
+                    matrix: SparseMatrix.fromDoc(result, sparseMatrixes[0].rows,
+                        sparseMatrixes[0].columns),
+                    operation: operation.name)));
         break;
       case Operation.subtraction:
         break;

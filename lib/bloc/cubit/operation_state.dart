@@ -1,28 +1,29 @@
 part of 'operation_cubit.dart';
 
 enum Operation {
-  none(0, 0, 0),
-  addition(2, 1, 0),
-  subtraction(2, 1, 0),
-  scalerMultiplication(1, 1, 1),
-  scalerDivision(1, 1, 1),
-  hadamardProduct(2, 1, 0),
-  transpose(1, 1, 0),
-  matrixMatrixMultiplication(2, 1, 0),
-  determinant(1, 1, 0),
-  trace(1, 1, 0),
-  inverse(1, 1, 0),
-  guassianElimination(1, 1, 0),
-  lUDecomposition(1, 2, 0),
-  adjoint(1, 1, 0),
-  cofactor(1, 1, 0);
+  none(0, 0, 0, "None"),
+  addition(2, 1, 0, "Addition"),
+  subtraction(2, 1, 0, "Subtraction"),
+  scalerMultiplication(1, 1, 1, "Scaler Multiplication"),
+  scalerDivision(1, 1, 1, "Scaler Division"),
+  hadamardProduct(2, 1, 0, "Hadamard Product"),
+  transpose(1, 1, 0, "Transpose"),
+  matrixMatrixMultiplication(2, 1, 0, "Matrix Multiplication"),
+  determinant(1, 1, 0, "Determinant"),
+  trace(1, 1, 0, "Trace"),
+  inverse(1, 1, 0, "Inverse"),
+  guassianElimination(1, 1, 0, "Gaussian Elimination"),
+  lUDecomposition(1, 2, 0, "LU Decomposition"),
+  adjoint(1, 1, 0, "Adjoint"),
+  cofactor(1, 1, 0, "Cofactor");
 
   final int inputMatrixCount;
   final int outputMatrixCount;
   final int inputValueCount;
+  final String name;
 
-  const Operation(
-      this.inputMatrixCount, this.outputMatrixCount, this.inputValueCount);
+  const Operation(this.inputMatrixCount, this.outputMatrixCount,
+      this.inputValueCount, this.name);
 }
 
 class OperationState extends Equatable {

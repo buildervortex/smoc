@@ -15,8 +15,8 @@ class SparseMatrix extends Equatable {
   @override
   List<Object> get props => [rows, columns, entries];
 
-  Map<int, Map<int, double>> toDoc() {
-    final map = <int, Map<int, double>>{};
+  Map<int, Map<int, num>> toDoc() {
+    final map = <int, Map<int, num>>{};
 
     for (var entry in entries) {
       if (!map.containsKey(entry.row)) {
@@ -28,11 +28,11 @@ class SparseMatrix extends Equatable {
     return map;
   }
 
-  List<List<double>> toCOO() {
-    final List<List<double>> list = [];
+  List<List<num>> toCOO() {
+    final List<List<num>> list = [];
 
     for (var entry in entries) {
-      List<double> item = [];
+      List<num> item = [];
       item.add(entry.row.toDouble());
       item.add(entry.column.toDouble());
       item.add(entry.value);
@@ -42,7 +42,7 @@ class SparseMatrix extends Equatable {
   }
 
   factory SparseMatrix.fromDoc(
-      Map<int, Map<int, double>> doc, int rows, int columns) {
+      Map<int, Map<int, num>> doc, int rows, int columns) {
     final matrixEntries = <MatrixEntry>[];
 
     for (var rowEntry in doc.entries) {
