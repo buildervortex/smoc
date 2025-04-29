@@ -27,14 +27,11 @@ class OperationCubit extends Cubit<OperationState> {
 
   void addInputValue(num inputValue) {
     final List<num> newInputValues = List.from(state.inputValues);
-    print('value to add: $inputValue');
     newInputValues.add(inputValue);
-    print('addInputValue: $newInputValues');
     emit(OperationState(
         operation: state.operation,
         sparseMatrixes: state.sparseMatrixes,
         inputValues: newInputValues));
-    print('addInputValue: ${state.inputValues}');
   }
 
   void clearData() {

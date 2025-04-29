@@ -5,13 +5,26 @@ import 'package:smo/bloc/cubit/matrix_input_cubit.dart';
 import 'package:smo/bloc/cubit/operation_cubit.dart';
 import 'package:smo/di/injection_container.dart';
 import 'package:smo/models/sparse_matrix.dart';
+import 'package:smo/presentation/pages/double_matrix_output_page.dart';
+import 'package:smo/presentation/pages/lup_matrix_output_page.dart';
 import 'package:smo/presentation/pages/matrix_input_page.dart';
 import 'package:smo/presentation/pages/single_input_page.dart';
 import 'package:smo/presentation/pages/single_matrix_output_page.dart';
+import 'package:smo/presentation/pages/single_value_output_page.dart';
 import 'package:smo/usecases/addition_usecase.dart';
+import 'package:smo/usecases/adjoint_usecase.dart';
+import 'package:smo/usecases/cofactor_matrix_usecase.dart';
+import 'package:smo/usecases/determinant_usecase.dart';
+import 'package:smo/usecases/guassian_elimination_usecase.dart';
+import 'package:smo/usecases/hadamard_product_usecase.dart';
+import 'package:smo/usecases/inverse_usecase.dart';
+import 'package:smo/usecases/lu_decomposition_usecase.dart';
+import 'package:smo/usecases/matrix_matrix_multiplication_usecase.dart';
 import 'package:smo/usecases/scaler_division_usecase.dart';
 import 'package:smo/usecases/scaler_multiplication_usecase.dart';
 import 'package:smo/usecases/substraction_usecase.dart';
+import 'package:smo/usecases/trace_usecase.dart';
+import 'package:smo/usecases/transpose_usecase.dart';
 
 class MatrixOperation {
   final String name;
@@ -317,10 +330,7 @@ class HomePage extends StatelessWidget {
       var value = await Navigator.push<num>(
           context, MaterialPageRoute(builder: (_) => SingleInputPage()));
       if (value != null) {
-        print("input value added $value");
         context.read<OperationCubit>().addInputValue(value);
-        print(
-            "input value added ${context.read<OperationCubit>().state.inputValues}");
       }
     }
     _performOperation(context);
@@ -394,24 +404,142 @@ class HomePage extends StatelessWidget {
         context.read<OperationCubit>().clearData();
         break;
       case Operation.hadamardProduct:
+        var hadamardProduct = sl<HadamardProductUsecase>();
+        var result = hadamardProduct(
+            sparseMatrixes[0].toDoc(),
+            sparseMatrixes[1].toDoc(),
+            sparseMatrixes[0].rows,
+            sparseMatrixes[0].columns);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => SingleMatrixOutputPage(
+                    matrix: SparseMatrix.fromDoc(result, sparseMatrixes[0].rows,
+                        sparseMatrixes[0].columns),
+                    operation: operation.name)));
+        context.read<OperationCubit>().clearData();
         break;
       case Operation.transpose:
+        var transpose = sl<TransposeUsecase>();
+        var result = transpose(sparseMatrixes[0].toDoc());
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => SingleMatrixOutputPage(
+                    matrix: SparseMatrix.fromDoc(result, sparseMatrixes[0].rows,
+                        sparseMatrixes[0].columns),
+                    operation: operation.name)));
+        context.read<OperationCubit>().clearData();
         break;
       case Operation.matrixMatrixMultiplication:
+        var matrixMatrixMultiplication =
+            sl<MatrixMatrixMultiplicationUsecase>();
+        var result = matrixMatrixMultiplication(
+            sparseMatrixes[0].toDoc(),
+            sparseMatrixes[0].rows,
+            sparseMatrixes[0].columns,
+            sparseMatrixes[1].toDoc(),
+            sparseMatrixes[1].rows,
+            sparseMatrixes[1].columns);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => SingleMatrixOutputPage(
+                    matrix: SparseMatrix.fromDoc(result, sparseMatrixes[0].rows,
+                        sparseMatrixes[0].columns),
+                    operation: operation.name)));
+        context.read<OperationCubit>().clearData();
         break;
       case Operation.determinant:
+        var determinant = sl<DeterminantUsecase>();
+        var result =
+            determinant(sparseMatrixes[0].toDoc(), sparseMatrixes[0].rows);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => SingleValueOutputPage(
+                    operation: operation.name, value: result.toString())));
+        context.read<OperationCubit>().clearData();
         break;
       case Operation.trace:
+        var trace = sl<TraceUsecase>();
+        var result = trace(sparseMatrixes[0].toDoc(), sparseMatrixes[0].rows);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => SingleValueOutputPage(
+                    operation: operation.name, value: result.toString())));
+        context.read<OperationCubit>().clearData();
         break;
       case Operation.inverse:
+        var inverse = sl<InverseUsecase>();
+        var result = inverse(sparseMatrixes[0].toDoc(), sparseMatrixes[0].rows);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => SingleMatrixOutputPage(
+                    matrix: SparseMatrix.fromDoc(result, sparseMatrixes[0].rows,
+                        sparseMatrixes[0].columns),
+                    operation: operation.name)));
+        context.read<OperationCubit>().clearData();
         break;
       case Operation.guassianElimination:
+        var elimination = sl<GuassianEliminationUsecase>();
+        var doc = sparseMatrixes[0].toDoc();
+        var result = elimination(doc, sparseMatrixes[0].rows);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => DoubleMatrixOutputPage(
+                    matrix1: SparseMatrix.fromDoc(
+                        doc, sparseMatrixes[0].rows, sparseMatrixes[0].columns),
+                    matrix2: SparseMatrix.fromDoc(result,
+                        sparseMatrixes[0].rows, sparseMatrixes[0].columns),
+                    operation: operation.name,
+                    title1: "U Matrix",
+                    title2: "Permutation Matrix")));
+        context.read<OperationCubit>().clearData();
         break;
       case Operation.lUDecomposition:
+        var lu = sl<LuDecompositionUsecase>();
+        var doc = sparseMatrixes[0].toDoc();
+        var rows = sparseMatrixes[0].rows;
+        var columns = sparseMatrixes[0].columns;
+
+        var result = lu(doc, sparseMatrixes[0].rows);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => LupMatrixOutputPage(
+                    uMatrix: SparseMatrix.fromDoc(result!.U, rows, columns),
+                    lMatrix: SparseMatrix.fromDoc(result!.L, rows, columns),
+                    pMatrix: SparseMatrix.fromDoc(result!.P, rows, columns))));
+        context.read<OperationCubit>().clearData();
         break;
       case Operation.adjoint:
+        var adjoin = sl<AdjointUsecase>();
+        var result = adjoin(sparseMatrixes[0].toDoc(), sparseMatrixes[0].rows);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => SingleMatrixOutputPage(
+                    matrix: SparseMatrix.fromDoc(result, sparseMatrixes[0].rows,
+                        sparseMatrixes[0].columns),
+                    operation: operation.name)));
+        context.read<OperationCubit>().clearData();
         break;
       case Operation.cofactor:
+        var cofactor = sl<CofactorMatrixUsecase>();
+        var result =
+            cofactor(sparseMatrixes[0].toDoc(), sparseMatrixes[0].rows);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => SingleMatrixOutputPage(
+                    matrix: SparseMatrix.fromDoc(result, sparseMatrixes[0].rows,
+                        sparseMatrixes[0].columns),
+                    operation: operation.name)));
+        context.read<OperationCubit>().clearData();
         break;
     }
   }

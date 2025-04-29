@@ -273,7 +273,7 @@ class LupMatrixOutputPage extends StatelessWidget {
     }
 
     // First convert sparse to dense format
-    List<List<double>> denseMatrix = List.generate(
+    List<List<num>> denseMatrix = List.generate(
       matrix.rows,
       (_) => List.filled(matrix.columns, 0.0),
     );
