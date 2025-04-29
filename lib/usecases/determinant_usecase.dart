@@ -8,6 +8,15 @@ class DeterminantUsecase {
     if (permutationMatrix == null) {
       return null;
     }
+    // Check if the matrix is singular
+    for (int rowIndex = 0; rowIndex < matrixSize; rowIndex++) {
+      if (sparseMatrix.containsKey(rowIndex) == false) {
+        return 0;
+      }
+      if (sparseMatrix[rowIndex]?.isEmpty ?? true) {
+        return 0;
+      }
+    }
     num determinant = multiplicationOfDialognal(sparseMatrix, matrixSize);
     int sign =
         GetSignFromPermuntationMatrixUsecase()(permutationMatrix, matrixSize);

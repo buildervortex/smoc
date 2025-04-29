@@ -79,7 +79,6 @@ void main() {
       final matrixSize = 4;
 
       final result = determinantUsecase(sparseMatrix, matrixSize);
-      print(result);
 
       expect(result, equals(0)); // Determinant = 0 for this singular matrix
     });

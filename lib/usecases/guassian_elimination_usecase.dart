@@ -22,6 +22,10 @@ class GuassianEliminationUsecase {
           continue;
         }
 
+        // for (int i = 0; i< matrixSize; i++){
+        //   if (sparseMatrix[i])
+        // }
+
         var pivotRowContent = Map<int, num>.from(sparseMatrix[rowIndex]!);
         var downRowContent = Map<int, num>.from(sparseMatrix[downRowIndex]!);
 
@@ -36,6 +40,10 @@ class GuassianEliminationUsecase {
         var substractedDownRow = subtractRow(downRowContent, substractor);
 
         sparseMatrix[downRowIndex] = substractedDownRow;
+
+        if (sparseMatrix[downRowIndex]!.isEmpty) {
+          sparseMatrix.remove(downRowIndex);
+        }
       }
     }
     return premutationMatrix;
@@ -54,6 +62,9 @@ class GuassianEliminationUsecase {
     for (var column in subtractor.keys) {
       if (result.containsKey(column)) {
         result[column] = result[column]! - subtractor[column]!;
+        if (result[column] == 0) {
+          result.remove(column);
+        }
       }
     }
     return result;

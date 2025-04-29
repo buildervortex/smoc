@@ -27,8 +27,8 @@ void main() {
       final result = guassianEliminationUsecase(sparseMatrix, matrixSize);
 
       expect(result, isNotNull);
-      expect(sparseMatrix[1]![0],
-          0); // Check if the first column of the second row is zero
+      expect(sparseMatrix[1]!.containsKey(0),
+          isFalse); // Validate that [1][0] does not exist
     });
 
     test('should return correct permutation matrix', () {
@@ -60,11 +60,11 @@ void main() {
       expect(result, isNotNull);
 
       // Validate that the first column below the pivot is zero
-      expect(sparseMatrix[1]![0], 0);
-      expect(sparseMatrix[2]![0], 0);
+      expect(sparseMatrix[1]!.containsKey(0), isFalse);
+      expect(sparseMatrix[2]!.containsKey(0), isFalse);
 
       // Validate that the second column below the pivot is zero
-      expect(sparseMatrix[2]![1], 0);
+      expect(sparseMatrix[2]!.containsKey(1), isFalse);
 
       // Validate the remaining non-zero elements
       expect(sparseMatrix[0]![0], 2);
