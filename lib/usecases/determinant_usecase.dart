@@ -5,8 +5,6 @@ class DeterminantUsecase {
   num? call(Map<int, Map<int, num>> sparseMatrix, int matrixSize) {
     Map<int, Map<int, num>> permutationMatrix;
     permutationMatrix = GuassianEliminationUsecase()(sparseMatrix, matrixSize);
-    print("guasian elimination sparse matrix: $sparseMatrix");
-    print("permutation matrix: $permutationMatrix");
     // Check if the matrix is singular
     for (int rowIndex = 0; rowIndex < matrixSize; rowIndex++) {
       if (sparseMatrix.containsKey(rowIndex) == false) {

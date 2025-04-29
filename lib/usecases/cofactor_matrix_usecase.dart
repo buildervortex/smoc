@@ -7,14 +7,17 @@ class CofactorMatrixUsecase {
       cofactorMatrix[rowIndex] = {};
       for (int columnIndex = 0; columnIndex < matrixSize; columnIndex++) {
         var minor = getMinor(matrix, rowIndex, columnIndex, matrixSize);
-        print(' rowIndex: $rowIndex, columnIndex: $columnIndex, minor: $minor');
         var determinant = DeterminantUsecase()(minor, matrixSize - 1);
-        print('determinant: $determinant');
-        // if (determinant == null) {
-        //   throw Exception('Determinant is null');
-        // }
-        // var sign = ((rowIndex + columnIndex) % 2 == 0) ? 1 : -1;
-        // cofactorMatrix[rowIndex]![columnIndex] = sign * determinant;
+        if (determinant == null) {
+          throw Exception('Determinant is null');
+        }
+        var sign = ((rowIndex + columnIndex) % 2 == 0) ? 1 : -1;
+        var value = sign * determinant;
+        if (value != 0) {
+          cofactorMatrix[rowIndex]![columnIndex] = value;
+        } else {
+          cofactorMatrix[rowIndex]!.remove(columnIndex);
+        }
       }
     }
     return cofactorMatrix;
