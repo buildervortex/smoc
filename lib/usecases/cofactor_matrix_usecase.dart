@@ -50,4 +50,6 @@ class CofactorMatrixUsecase {
 
     return minor;
   }
+
+  
 }

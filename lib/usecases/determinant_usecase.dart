@@ -17,7 +17,8 @@ class DeterminantUsecase {
         return 0;
       }
     }
-    num determinant = multiplicationOfDialognal(sparseMatrix, matrixSize);
+    num determinant =
+        truncateToFive(multiplicationOfDialognal(sparseMatrix, matrixSize));
     int sign =
         GetSignFromPermuntationMatrixUsecase()(permutationMatrix, matrixSize);
     return sign * determinant;
@@ -32,5 +33,10 @@ class DeterminantUsecase {
       }
     }
     return result;
+  }
+
+  num truncateToFive(num value) {
+    int factor = 100000;
+    return (value * factor).truncate() / factor;
   }
 }
