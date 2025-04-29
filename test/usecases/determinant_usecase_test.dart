@@ -26,7 +26,7 @@ void main() {
 
       final result = determinantUsecase(sparseMatrix, matrixSize);
 
-      expect(result, isNull); // Singular matrix, determinant is 0
+      expect(result, equals(0)); // Singular matrix, determinant is 0
     });
 
     test('should return correct sign and determinant for a larger matrix', () {

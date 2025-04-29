@@ -7,7 +7,6 @@ class MatrixMatrixMultiplicationUsecase {
       int matrix2Row,
       int matrix2Column) {
     if (matrix1Column != matrix2Row) {
-      print("throwing exception");
       throw Exception('Matrix multiplication not possible');
     }
 

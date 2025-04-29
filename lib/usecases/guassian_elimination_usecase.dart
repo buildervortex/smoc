@@ -2,14 +2,14 @@ import 'package:smo/usecases/check_singular_matrix_usecase.dart';
 import 'package:smo/usecases/swap_row_usecase.dart';
 
 class GuassianEliminationUsecase {
-  Map<int, Map<int, num>>? call(
+  Map<int, Map<int, num>> call(
       Map<int, Map<int, num>> sparseMatrix, int matrixSize) {
     // Step 1: Swap rows to get a non-zero pivot
     var premutationMatrix = SwapRowUsecase()(sparseMatrix, matrixSize);
     // Step 2: Check for singular matrix
     // If the matrix is singular, return null
     if (CheckSingularMatrixUsecase()(sparseMatrix, matrixSize)) {
-      return null;
+      return premutationMatrix;
     }
     // Step 3: Perform Gaussian elimination
     for (int rowIndex = 0; rowIndex < matrixSize; rowIndex++) {

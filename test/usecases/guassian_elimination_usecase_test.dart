@@ -5,18 +5,6 @@ void main() {
   group('GuassianEliminationUsecase', () {
     final guassianEliminationUsecase = GuassianEliminationUsecase();
 
-    test('should return null for singular matrix', () {
-      final Map<int, Map<int, num>> sparseMatrix = {
-        0: {1: 2},
-        1: {1: 4},
-      };
-      final matrixSize = 2;
-
-      final result = guassianEliminationUsecase(sparseMatrix, matrixSize);
-
-      expect(result, isNull);
-    });
-
     test('should perform Gaussian elimination correctly', () {
       final Map<int, Map<int, num>> sparseMatrix = {
         0: {0: 2, 1: 1},
