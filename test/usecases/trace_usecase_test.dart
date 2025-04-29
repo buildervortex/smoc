@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-
-import 'trace_usecase.dart';
+import 'package:smo/usecases/trace_usecase.dart';
 
 void main() {
   group('TraceUsecase', () {

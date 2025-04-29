@@ -316,4 +316,44 @@ class HomePage extends StatelessWidget {
       }
     }
   }
+
+  Future<void> _performOperation(BuildContext context) async {
+    final operation = context.read<OperationCubit>().state.operation;
+    final sparseMatrixes = context.read<OperationCubit>().state.sparseMatrixes;
+    final inputValues = context.read<OperationCubit>().state.inputValues;
+
+    switch (operation) {
+      case Operation.none:
+        break;
+      case Operation.addition:
+        // sl
+        break;
+      case Operation.subtraction:
+        break;
+      case Operation.scalerMultiplication:
+        break;
+      case Operation.scalerDivision:
+        break;
+      case Operation.hadamardProduct:
+        break;
+      case Operation.transpose:
+        break;
+      case Operation.matrixMatrixMultiplication:
+        break;
+      case Operation.determinant:
+        break;
+      case Operation.trace:
+        break;
+      case Operation.inverse:
+        break;
+      case Operation.guassianElimination:
+        break;
+      case Operation.lUDecomposition:
+        break;
+      case Operation.adjoint:
+        break;
+      case Operation.cofactor:
+        break;
+    }
+  }
 }
