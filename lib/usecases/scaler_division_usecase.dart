@@ -1,6 +1,6 @@
 import 'package:smo/models/sparse_matrix.dart';
 
-class ScalerMultiplication {
+class ScalerDivisionUsecase {
   Map<int, Map<int, num>> call(Map<int, Map<int, num>> matrix, num divider) {
     if (divider == 0) {
       throw ArgumentError('Divider cannot be zero');

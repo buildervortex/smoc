@@ -2,7 +2,7 @@ import 'package:smo/usecases/get_sign_from_permuntation_matrix_usecase.dart';
 import 'package:smo/usecases/guassian_elimination_usecase.dart';
 
 class DeterminantUsecase {
-  num? call(Map<int, Map<int, num>> sparseMatrix, int matrixSize) {
+  num call(Map<int, Map<int, num>> sparseMatrix, int matrixSize) {
     Map<int, Map<int, num>> permutationMatrix;
     permutationMatrix = GuassianEliminationUsecase()(sparseMatrix, matrixSize);
     // Check if the matrix is singular

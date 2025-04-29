@@ -2,8 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:smo/usecases/scaler_division_usecase.dart';
 
 void main() {
-  group('ScalerMultiplication', () {
-    final scalerMultiplication = ScalerMultiplication();
+  group('scalerDivision', () {
+    final scalerDivision = ScalerDivisionUsecase();
 
     test('should divide all elements of the matrix by the given divider', () {
       final matrix = {
@@ -12,7 +12,7 @@ void main() {
       };
       final divider = 2;
 
-      final result = scalerMultiplication.call(matrix, divider);
+      final result = scalerDivision.call(matrix, divider);
 
       expect(result, {
         0: {0: 2.0, 1: 4.0},
@@ -27,15 +27,14 @@ void main() {
       };
       final divider = 0;
 
-      expect(() => scalerMultiplication.call(matrix, divider),
-          throwsArgumentError);
+      expect(() => scalerDivision.call(matrix, divider), throwsArgumentError);
     });
 
     test('should return an empty matrix when input matrix is empty', () {
       final matrix = <int, Map<int, num>>{};
       final divider = 2;
 
-      final result = scalerMultiplication.call(matrix, divider);
+      final result = scalerDivision.call(matrix, divider);
 
       expect(result, isEmpty);
     });
@@ -47,7 +46,7 @@ void main() {
       };
       final divider = 2;
 
-      final result = scalerMultiplication.call(matrix, divider);
+      final result = scalerDivision.call(matrix, divider);
 
       expect(result, {
         0: {1: 4.0},
@@ -62,7 +61,7 @@ void main() {
       };
       final divider = 2;
 
-      final result = scalerMultiplication.call(matrix, divider);
+      final result = scalerDivision.call(matrix, divider);
 
       expect(result, {
         0: {0: -2.0, 1: 4.0},
