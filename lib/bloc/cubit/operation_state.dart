@@ -28,7 +28,7 @@ enum Operation {
 
 class OperationState extends Equatable {
   final List<SparseMatrix> sparseMatrixes;
-  final List<double> inputValues;
+  final List<num> inputValues;
   final Operation operation;
 
   const OperationState(
@@ -37,7 +37,7 @@ class OperationState extends Equatable {
       required this.inputValues});
 
   @override
-  List<Object> get props => [sparseMatrixes, operation];
+  List<Object> get props => [sparseMatrixes, operation, inputValues];
 }
 
 final class OperationInitial extends OperationState {

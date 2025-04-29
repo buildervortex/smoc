@@ -141,7 +141,7 @@ class _SingleInputPageState extends State<SingleInputPage> {
   }
 
   void _submitValue() {
-    var doubleValue = double.tryParse(_controller.text);
+    var doubleValue = num.tryParse(_controller.text);
     if (doubleValue == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

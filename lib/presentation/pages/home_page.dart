@@ -9,6 +9,9 @@ import 'package:smo/presentation/pages/matrix_input_page.dart';
 import 'package:smo/presentation/pages/single_input_page.dart';
 import 'package:smo/presentation/pages/single_matrix_output_page.dart';
 import 'package:smo/usecases/addition_usecase.dart';
+import 'package:smo/usecases/scaler_division_usecase.dart';
+import 'package:smo/usecases/scaler_multiplication_usecase.dart';
+import 'package:smo/usecases/substraction_usecase.dart';
 
 class MatrixOperation {
   final String name;
@@ -311,10 +314,13 @@ class HomePage extends StatelessWidget {
       }
     }
     for (int i = 0; i < valueCount; i++) {
-      var value = await Navigator.push<double>(
+      var value = await Navigator.push<num>(
           context, MaterialPageRoute(builder: (_) => SingleInputPage()));
       if (value != null) {
+        print("input value added $value");
         context.read<OperationCubit>().addInputValue(value);
+        print(
+            "input value added ${context.read<OperationCubit>().state.inputValues}");
       }
     }
     _performOperation(context);
@@ -342,12 +348,50 @@ class HomePage extends StatelessWidget {
                     matrix: SparseMatrix.fromDoc(result, sparseMatrixes[0].rows,
                         sparseMatrixes[0].columns),
                     operation: operation.name)));
+        context.read<OperationCubit>().clearData();
         break;
       case Operation.subtraction:
+        var substractionUsecase = sl<SubstractionUsecase>();
+        var result = substractionUsecase(
+            sparseMatrixes[0].toDoc(),
+            sparseMatrixes[1].toDoc(),
+            sparseMatrixes[0].rows,
+            sparseMatrixes[0].columns);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => SingleMatrixOutputPage(
+                    matrix: SparseMatrix.fromDoc(result, sparseMatrixes[0].rows,
+                        sparseMatrixes[0].columns),
+                    operation: operation.name)));
+        context.read<OperationCubit>().clearData();
         break;
       case Operation.scalerMultiplication:
+        var scalerMultiplication = sl<ScalerMultiplication>();
+        print(sparseMatrixes);
+        print(inputValues);
+        var result =
+            scalerMultiplication(sparseMatrixes[0].toDoc(), inputValues[0]);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => SingleMatrixOutputPage(
+                    matrix: SparseMatrix.fromDoc(result, sparseMatrixes[0].rows,
+                        sparseMatrixes[0].columns),
+                    operation: operation.name)));
+        context.read<OperationCubit>().clearData();
         break;
       case Operation.scalerDivision:
+        var scalerDivision = sl<ScalerDivisionUsecase>();
+        var result = scalerDivision(sparseMatrixes[0].toDoc(), inputValues[0]);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => SingleMatrixOutputPage(
+                    matrix: SparseMatrix.fromDoc(result, sparseMatrixes[0].rows,
+                        sparseMatrixes[0].columns),
+                    operation: operation.name)));
+        context.read<OperationCubit>().clearData();
         break;
       case Operation.hadamardProduct:
         break;
