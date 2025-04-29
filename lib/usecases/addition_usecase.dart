@@ -1,4 +1,4 @@
-class HadamardProductUsecase {
+class AdditionUsecase {
   Map<int, Map<int, num>> call(
     Map<int, Map<int, num>> matrix1,
     Map<int, Map<int, num>> matrix2,
@@ -28,6 +28,9 @@ class HadamardProductUsecase {
           }
           continue;
         }
+      }
+      if (result[rowIndex]!.isEmpty) {
+        result.remove(rowIndex);
       }
     }
 

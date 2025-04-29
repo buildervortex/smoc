@@ -2,8 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:smo/usecases/addition_usecase.dart';
 
 void main() {
-  group('HadamardProductUsecase', () {
-    final usecase = HadamardProductUsecase();
+  group('AdditionUsecase', () {
+    final usecase = AdditionUsecase();
 
     test('should return the sum of two matrices', () {
       final matrix1 = {
