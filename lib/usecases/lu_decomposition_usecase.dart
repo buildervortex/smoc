@@ -1,8 +1,8 @@
 import 'package:smo/usecases/check_singular_matrix_usecase.dart';
 import 'package:smo/usecases/swap_row_usecase.dart';
 
-class GuassianEliminationUsecase {
-  Map<int, Map<int, num>>? call(
+class LuDecompositionUsecase {
+  LuDecompositionResult? call(
       Map<int, Map<int, num>> sparseMatrix, int matrixSize) {
     // Step 1: Swap rows to get a non-zero pivot
     var premutationMatrix = SwapRowUsecase()(sparseMatrix, matrixSize);
@@ -11,6 +11,8 @@ class GuassianEliminationUsecase {
     if (CheckSingularMatrixUsecase()(sparseMatrix, matrixSize)) {
       return null;
     }
+    var L = getL(matrixSize);
+
     // Step 3: Perform Gaussian elimination
     for (int rowIndex = 0; rowIndex < matrixSize; rowIndex++) {
       int pivotIndex = rowIndex;
@@ -22,10 +24,6 @@ class GuassianEliminationUsecase {
           continue;
         }
 
-        // for (int i = 0; i< matrixSize; i++){
-        //   if (sparseMatrix[i])
-        // }
-
         var pivotRowContent = Map<int, num>.from(sparseMatrix[rowIndex]!);
         var downRowContent = Map<int, num>.from(sparseMatrix[downRowIndex]!);
 
@@ -35,6 +33,7 @@ class GuassianEliminationUsecase {
 
         num multiplier =
             downRowContent[pivotIndex]! / pivotRowContent[pivotIndex]!;
+        L![downRowIndex]![pivotIndex] = multiplier;
 
         var substractor = multiplyRow(pivotRowContent, multiplier);
         var substractedDownRow = subtractRow(downRowContent, substractor);
@@ -46,7 +45,7 @@ class GuassianEliminationUsecase {
         }
       }
     }
-    return premutationMatrix;
+    return LuDecompositionResult(L!, sparseMatrix, premutationMatrix);
   }
 
   Map<int, num> multiplyRow(Map<int, num> row, num multiplier) {
@@ -74,4 +73,21 @@ class GuassianEliminationUsecase {
     }
     return result;
   }
+
+  Map<int, Map<int, num>>? getL(int matrixSize) {
+    var L = <int, Map<int, num>>{};
+    for (int i = 0; i < matrixSize; i++) {
+      L[i] = <int, num>{};
+      L[i]![i] = 1;
+    }
+    return L;
+  }
+}
+
+class LuDecompositionResult {
+  final Map<int, Map<int, num>> L;
+  final Map<int, Map<int, num>> U;
+  final Map<int, Map<int, num>> P;
+
+  LuDecompositionResult(this.L, this.U, this.P);
 }
