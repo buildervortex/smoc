@@ -76,7 +76,7 @@ class SparseMatrix extends Equatable {
     );
   }
 
-  Map<int, Map<int, num>> docfromCOO(List<List<num>> coo) {
+  static Map<int, Map<int, num>> docfromCOO(List<List<num>> coo) {
     final dok = <int, Map<int, num>>{};
 
     for (var entry in coo) {
@@ -93,7 +93,7 @@ class SparseMatrix extends Equatable {
     return dok;
   }
 
-  List<List<num>> coofromDoc(Map<int, Map<int, num>> doc) {
+  static List<List<num>> coofromDoc(Map<int, Map<int, num>> doc) {
     final coo = <List<num>>[];
 
     for (var rowEntry in doc.entries) {
