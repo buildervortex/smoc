@@ -2,9 +2,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:smo/usecases/adjoint_usecase.dart';
 
 void main() {
-  group('CheckSingularMatrixUsecase', () {
+  group('AdjointUsecase', () {
     test('should return the adjoint of a 2x2 matrix', () {
-      final usecase = CheckSingularMatrixUsecase();
+      final usecase = AdjointUsecase();
       final matrix = {
         0: {0: 1, 1: 2},
         1: {0: 3, 1: 4},
@@ -20,7 +20,7 @@ void main() {
     });
 
     test('should return the adjoint of a 3x3 matrix', () {
-      final usecase = CheckSingularMatrixUsecase();
+      final usecase = AdjointUsecase();
       final matrix = {
         0: {0: 1, 1: 2, 2: 3},
         1: {1: 1, 2: 4},
@@ -38,7 +38,7 @@ void main() {
     });
 
     test('should handle an empty matrix', () {
-      final usecase = CheckSingularMatrixUsecase();
+      final usecase = AdjointUsecase();
       final matrix = <int, Map<int, num>>{};
       final expectedAdjoint = <int, Map<int, num>>{};
 
