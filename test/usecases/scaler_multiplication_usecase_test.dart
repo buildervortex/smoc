@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:smo/usecases/scaler_multiplication.dart';
+import 'package:smo/usecases/scaler_multiplication_usecase.dart';
 
 void main() {
   group('ScalerMultiplication', () {

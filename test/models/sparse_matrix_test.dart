@@ -82,7 +82,7 @@ void main() {
       ];
 
       final matrix = SparseMatrix(rows: 3, columns: 3, entries: []);
-      final doc = matrix.docfromCOO(coo);
+      final doc = SparseMatrix.docfromCOO(coo);
 
       expect(doc, {
         0: {1: 2.0},
@@ -98,7 +98,7 @@ void main() {
       };
 
       final matrix = SparseMatrix(rows: 3, columns: 3, entries: []);
-      final coo = matrix.coofromDoc(doc);
+      final coo = SparseMatrix.coofromDoc(doc);
 
       expect(coo, [
         [0.0, 1.0, 2.0],
