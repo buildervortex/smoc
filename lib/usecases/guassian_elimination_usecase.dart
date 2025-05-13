@@ -4,10 +4,10 @@ import 'package:smo/usecases/swap_row_usecase.dart';
 class GuassianEliminationUsecase {
   Map<int, Map<int, num>> call(
       Map<int, Map<int, num>> sparseMatrix, int matrixSize) {
-    // Step 1: Swap rows to get a non-zero pivot
+    // Swap the rows in the matrix to make sure each row pivot point contains non-zero element
     var premutationMatrix = SwapRowUsecase()(sparseMatrix, matrixSize);
-    // Step 2: Check for singular matrix
-    // If the matrix is singular, return null
+
+    // If the matrix is singular, return permutationMatrix without processing guassian elimination. because this will cause zero-division error
     if (CheckSingularMatrixUsecase()(sparseMatrix, matrixSize)) {
       return premutationMatrix;
     }
