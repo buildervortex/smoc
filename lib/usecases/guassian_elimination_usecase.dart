@@ -20,22 +20,22 @@ class GuassianEliminationUsecase {
           downRowIndex < matrixSize;
           downRowIndex++) {
         // if down row already zero, skip the current down row.
-        if (!(sparseMatrix[downRowIndex]?.containsKey(pivotColumnIndex) ??
+        if (!(sparseMatrix.containsKey(downRowIndex))) {
+          continue;
+        } else if (!(sparseMatrix[downRowIndex]
+                ?.containsKey(pivotColumnIndex) ??
             false)) {
           continue;
         }
 
-        var pivotRowContent = Map<int, num>.from(sparseMatrix[rowIndex]!);
+        var currentRowContent = Map<int, num>.from(sparseMatrix[rowIndex]!);
         var downRowContent = Map<int, num>.from(sparseMatrix[downRowIndex]!);
 
-        if (pivotRowContent[pivotColumnIndex] == 0) {
-          continue;
-        }
-
+        // get the multiplier
         num multiplier = downRowContent[pivotColumnIndex]! /
-            pivotRowContent[pivotColumnIndex]!;
+            currentRowContent[pivotColumnIndex]!;
 
-        var substractor = multiplyRow(pivotRowContent, multiplier);
+        var substractor = multiplyRow(currentRowContent, multiplier);
         var substractedDownRow = subtractRow(downRowContent, substractor);
 
         sparseMatrix[downRowIndex] = substractedDownRow;

@@ -29,8 +29,9 @@ class SwapRowUsecase {
         }
 
         Map<int, num> currentPivotRowContent =
-            sparseMatrix[pivotRowIndex] ?? {};
-        Map<int, num> downRowContent = Map<int,num>.from(sparseMatrix[downRowIndex]!);
+            Map<int, num>.from(sparseMatrix[pivotRowIndex] ?? {});
+        Map<int, num> downRowContent =
+            Map<int, num>.from(sparseMatrix[downRowIndex]!);
 
         sparseMatrix[pivotRowIndex] = downRowContent;
 

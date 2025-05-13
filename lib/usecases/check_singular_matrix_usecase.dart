@@ -6,6 +6,8 @@ class CheckSingularMatrixUsecase {
 
       if (matrix[rowIndex] == null) {
         return true;
+      } else if (!(matrix.containsKey(rowIndex))) {
+        return true;
       } else if (matrix[rowIndex]?.isEmpty ?? true) {
         return true;
       } else if (!(matrix[rowIndex]?.containsKey(pivotColumnIndex) ?? false)) {
