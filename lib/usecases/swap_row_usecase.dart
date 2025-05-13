@@ -1,46 +1,60 @@
 class SwapRowUsecase {
   Map<int, Map<int, num>> call(
       Map<int, Map<int, num>> sparseMatrix, int matrixSize) {
-    // Create the permuntation matrix
-    Map<int, Map<int, num>> perm = {};
-    for (int i = 0; i < matrixSize; i++) {
-      // set the row
-      perm[i] = {};
-      perm[i]![i] = 1.0;
-    }
+    // Create the base identity permuntation matrix
+    final permutationMatrix = getPermutationMatrix(matrixSize);
 
-    // Swap the rows
-    for (int rowIndex = 0; rowIndex < matrixSize; rowIndex++) {
-      int pivotIndex = rowIndex;
+    // Swap the rows to make the pivot point non zero
+    for (int pivotRowIndex = 0; pivotRowIndex < matrixSize; pivotRowIndex++) {
+      int currentRowPivotColumnIndex = pivotRowIndex;
 
-      if (sparseMatrix[rowIndex]?.containsKey(pivotIndex) ?? false) {
+      // if the current row pivot point already contains non-zero element just skip the current row
+      if (sparseMatrix[pivotRowIndex]
+              ?.containsKey(currentRowPivotColumnIndex) ??
+          false) {
         continue;
       }
 
-      for (int downRowIndex = rowIndex + 1;
+      // loop through all the rows below the current pivot point row to make their pivot point indexes zero
+      for (int downRowIndex = pivotRowIndex + 1;
           downRowIndex < matrixSize;
           downRowIndex++) {
-        if (!(sparseMatrix[downRowIndex]?.containsKey(pivotIndex) ?? false)) {
+        // if the downRow pivot column already contains zero, skip the current down row
+        if (!(sparseMatrix[downRowIndex]
+                ?.containsKey(currentRowPivotColumnIndex) ??
+            false)) {
           continue;
         }
 
-        var currentRowContent = sparseMatrix[rowIndex];
+        var currentPivotRowContent = sparseMatrix[pivotRowIndex];
         Map<int, num> downRowContent = sparseMatrix[downRowIndex]!;
 
-        sparseMatrix[rowIndex] = downRowContent;
+        sparseMatrix[pivotRowIndex] = downRowContent;
 
-        if (currentRowContent == null) {
+        // if the current pivot row content empty or null, then removes the current empty row from the sparse matrix
+        if (currentPivotRowContent?.isEmpty ?? true) {
           sparseMatrix.remove(downRowIndex);
         } else {
-          sparseMatrix[downRowIndex] = currentRowContent;
+          sparseMatrix[downRowIndex] = currentPivotRowContent!;
         }
 
-        // Swap the permutation matrix
-        Map<int, num> tempRow = perm[rowIndex]!;
-        perm[rowIndex] = perm[downRowIndex]!;
-        perm[downRowIndex] = tempRow;
+        // Swap the permutation matrix to preserve the swap
+        Map<int, num> tempRow = permutationMatrix[pivotRowIndex]!;
+        permutationMatrix[pivotRowIndex] = permutationMatrix[downRowIndex]!;
+        permutationMatrix[downRowIndex] = tempRow;
+        // after the swapping no need to look for other down elements so use break.now the current pivot row pivot column is safely contains non-zero element
         break;
       }
+    }
+    return permutationMatrix;
+  }
+
+  Map<int, Map<int, num>> getPermutationMatrix(int squareMatrixSize) {
+    Map<int, Map<int, num>> perm = {};
+    for (int i = 0; i < squareMatrixSize; i++) {
+      // set the row
+      perm[i] = {};
+      perm[i]![i] = 1.0;
     }
     return perm;
   }
