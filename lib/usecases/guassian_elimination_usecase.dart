@@ -11,30 +11,29 @@ class GuassianEliminationUsecase {
     if (CheckSingularMatrixUsecase()(sparseMatrix, matrixSize)) {
       return premutationMatrix;
     }
-    // Step 3: Perform Gaussian elimination
+
+    // guassian elimination
     for (int rowIndex = 0; rowIndex < matrixSize; rowIndex++) {
-      int pivotIndex = rowIndex;
+      int pivotColumnIndex = rowIndex;
 
       for (int downRowIndex = rowIndex + 1;
           downRowIndex < matrixSize;
           downRowIndex++) {
-        if (!(sparseMatrix[downRowIndex]?.containsKey(pivotIndex) ?? false)) {
+        // if down row already zero, skip the current down row.
+        if (!(sparseMatrix[downRowIndex]?.containsKey(pivotColumnIndex) ??
+            false)) {
           continue;
         }
-
-        // for (int i = 0; i< matrixSize; i++){
-        //   if (sparseMatrix[i])
-        // }
 
         var pivotRowContent = Map<int, num>.from(sparseMatrix[rowIndex]!);
         var downRowContent = Map<int, num>.from(sparseMatrix[downRowIndex]!);
 
-        if (pivotRowContent[pivotIndex] == 0) {
+        if (pivotRowContent[pivotColumnIndex] == 0) {
           continue;
         }
 
-        num multiplier =
-            downRowContent[pivotIndex]! / pivotRowContent[pivotIndex]!;
+        num multiplier = downRowContent[pivotColumnIndex]! /
+            pivotRowContent[pivotColumnIndex]!;
 
         var substractor = multiplyRow(pivotRowContent, multiplier);
         var substractedDownRow = subtractRow(downRowContent, substractor);
