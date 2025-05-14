@@ -346,11 +346,22 @@ class HomePage extends StatelessWidget {
         break;
       case Operation.addition:
         var additionUsecase = sl<AdditionUsecase>();
-        var result = additionUsecase(
-            sparseMatrixes[0].toDoc(),
-            sparseMatrixes[1].toDoc(),
-            sparseMatrixes[0].rows,
-            sparseMatrixes[0].columns);
+        late Map<int, Map<int, num>> result;
+        try {
+          result = additionUsecase(
+              sparseMatrixes[0].toDoc(),
+              sparseMatrixes[1].toDoc(),
+              sparseMatrixes[0].rows,
+              sparseMatrixes[0].columns);
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("$e"),
+              backgroundColor: Colors.red,
+            ),
+          );
+          break;
+        }
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -362,11 +373,22 @@ class HomePage extends StatelessWidget {
         break;
       case Operation.subtraction:
         var substractionUsecase = sl<SubstractionUsecase>();
-        var result = substractionUsecase(
-            sparseMatrixes[0].toDoc(),
-            sparseMatrixes[1].toDoc(),
-            sparseMatrixes[0].rows,
-            sparseMatrixes[0].columns);
+        Map<int, Map<int, num>> result;
+        try {
+          result = substractionUsecase(
+              sparseMatrixes[0].toDoc(),
+              sparseMatrixes[1].toDoc(),
+              sparseMatrixes[0].rows,
+              sparseMatrixes[0].columns);
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("$e"),
+              backgroundColor: Colors.red,
+            ),
+          );
+          break;
+        }
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -378,8 +400,6 @@ class HomePage extends StatelessWidget {
         break;
       case Operation.scalerMultiplication:
         var scalerMultiplication = sl<ScalerMultiplication>();
-        print(sparseMatrixes);
-        print(inputValues);
         var result =
             scalerMultiplication(sparseMatrixes[0].toDoc(), inputValues[0]);
         Navigator.push(
@@ -405,11 +425,22 @@ class HomePage extends StatelessWidget {
         break;
       case Operation.hadamardProduct:
         var hadamardProduct = sl<HadamardProductUsecase>();
-        var result = hadamardProduct(
-            sparseMatrixes[0].toDoc(),
-            sparseMatrixes[1].toDoc(),
-            sparseMatrixes[0].rows,
-            sparseMatrixes[0].columns);
+        late Map<int, Map<int, num>> result;
+        try {
+          result = hadamardProduct(
+              sparseMatrixes[0].toDoc(),
+              sparseMatrixes[1].toDoc(),
+              sparseMatrixes[0].rows,
+              sparseMatrixes[0].columns);
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("$e"),
+              backgroundColor: Colors.red,
+            ),
+          );
+          break;
+        }
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -421,7 +452,18 @@ class HomePage extends StatelessWidget {
         break;
       case Operation.transpose:
         var transpose = sl<TransposeUsecase>();
-        var result = transpose(sparseMatrixes[0].toDoc());
+        late Map<int, Map<int, num>> result;
+        try {
+          result = transpose(sparseMatrixes[0].toDoc());
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("$e"),
+              backgroundColor: Colors.red,
+            ),
+          );
+          break;
+        }
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -434,13 +476,24 @@ class HomePage extends StatelessWidget {
       case Operation.matrixMatrixMultiplication:
         var matrixMatrixMultiplication =
             sl<MatrixMatrixMultiplicationUsecase>();
-        var result = matrixMatrixMultiplication(
-            sparseMatrixes[0].toDoc(),
-            sparseMatrixes[0].rows,
-            sparseMatrixes[0].columns,
-            sparseMatrixes[1].toDoc(),
-            sparseMatrixes[1].rows,
-            sparseMatrixes[1].columns);
+        late Map<int, Map<int, num>> result;
+        try {
+          result = matrixMatrixMultiplication(
+              sparseMatrixes[0].toDoc(),
+              sparseMatrixes[0].rows,
+              sparseMatrixes[0].columns,
+              sparseMatrixes[1].toDoc(),
+              sparseMatrixes[1].rows,
+              sparseMatrixes[1].columns);
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("$e"),
+              backgroundColor: Colors.red,
+            ),
+          );
+          break;
+        }
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -452,8 +505,19 @@ class HomePage extends StatelessWidget {
         break;
       case Operation.determinant:
         var determinant = sl<DeterminantUsecase>();
-        var result =
-            determinant(sparseMatrixes[0].toDoc(), sparseMatrixes[0].rows);
+        num result;
+        try {
+          result =
+              determinant(sparseMatrixes[0].toDoc(), sparseMatrixes[0].rows);
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("$e"),
+              backgroundColor: Colors.red,
+            ),
+          );
+          break;
+        }
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -463,7 +527,18 @@ class HomePage extends StatelessWidget {
         break;
       case Operation.trace:
         var trace = sl<TraceUsecase>();
-        var result = trace(sparseMatrixes[0].toDoc(), sparseMatrixes[0].rows);
+        num result;
+        try {
+          result = trace(sparseMatrixes[0].toDoc(), sparseMatrixes[0].rows);
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("$e"),
+              backgroundColor: Colors.red,
+            ),
+          );
+          break;
+        }
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -473,7 +548,18 @@ class HomePage extends StatelessWidget {
         break;
       case Operation.inverse:
         var inverse = sl<InverseUsecase>();
-        var result = inverse(sparseMatrixes[0].toDoc(), sparseMatrixes[0].rows);
+        late Map<int, Map<int, num>> result;
+        try {
+          result = inverse(sparseMatrixes[0].toDoc(), sparseMatrixes[0].rows);
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("$e"),
+              backgroundColor: Colors.red,
+            ),
+          );
+          break;
+        }
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -486,7 +572,18 @@ class HomePage extends StatelessWidget {
       case Operation.guassianElimination:
         var elimination = sl<GuassianEliminationUsecase>();
         var doc = sparseMatrixes[0].toDoc();
-        var result = elimination(doc, sparseMatrixes[0].rows);
+        late Map<int, Map<int, num>> result;
+        try {
+          result = elimination(doc, sparseMatrixes[0].rows);
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("$e"),
+              backgroundColor: Colors.red,
+            ),
+          );
+          break;
+        }
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -506,7 +603,18 @@ class HomePage extends StatelessWidget {
         var rows = sparseMatrixes[0].rows;
         var columns = sparseMatrixes[0].columns;
 
-        var result = lu(doc, sparseMatrixes[0].rows);
+        late LuDecompositionResult? result;
+        try {
+          result = lu(doc, sparseMatrixes[0].rows);
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("$e"),
+              backgroundColor: Colors.red,
+            ),
+          );
+          break;
+        }
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -518,7 +626,18 @@ class HomePage extends StatelessWidget {
         break;
       case Operation.adjoint:
         var adjoin = sl<AdjointUsecase>();
-        var result = adjoin(sparseMatrixes[0].toDoc(), sparseMatrixes[0].rows);
+        Map<int, Map<int, num>> result;
+        try {
+          result = adjoin(sparseMatrixes[0].toDoc(), sparseMatrixes[0].rows);
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("$e"),
+              backgroundColor: Colors.red,
+            ),
+          );
+          break;
+        }
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -530,8 +649,18 @@ class HomePage extends StatelessWidget {
         break;
       case Operation.cofactor:
         var cofactor = sl<CofactorMatrixUsecase>();
-        var result =
-            cofactor(sparseMatrixes[0].toDoc(), sparseMatrixes[0].rows);
+        late Map<int, Map<int, num>> result;
+        try {
+          result = cofactor(sparseMatrixes[0].toDoc(), sparseMatrixes[0].rows);
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("$e"),
+              backgroundColor: Colors.red,
+            ),
+          );
+          break;
+        }
         Navigator.push(
             context,
             MaterialPageRoute(
