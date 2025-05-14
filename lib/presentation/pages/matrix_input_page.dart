@@ -238,7 +238,7 @@ class _MatrixInputPageState extends State<MatrixInputPage> {
                                       child: Text('${index + 1}'),
                                     ),
                                     title: Text(
-                                      "Position [${entry.row}, ${entry.column}]",
+                                      "Position [${entry.row + 1}, ${entry.column + 1}]",
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -299,7 +299,7 @@ class _MatrixInputPageState extends State<MatrixInputPage> {
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 labelText: 'Row',
-                                hintText: "Index from 0",
+                                hintText: "Index from 1",
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -318,7 +318,7 @@ class _MatrixInputPageState extends State<MatrixInputPage> {
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 labelText: 'Column',
-                                hintText: "Index from 0",
+                                hintText: "Index from 1",
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),

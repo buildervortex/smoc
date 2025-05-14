@@ -29,7 +29,7 @@ void main() {
       final result = guassianEliminationUsecase(sparseMatrix, matrixSize);
 
       expect(result, isNotNull);
-      expect(result![0]![0], 1); // Check if the permutation matrix is correct
+      expect(result[0]![0], 1); // Check if the permutation matrix is correct
       expect(result[1]![1], 1);
     });
 
